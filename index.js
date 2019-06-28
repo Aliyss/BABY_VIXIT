@@ -1,9 +1,23 @@
 const VixitClient = require('./client/VixitClient.js');
+const Discord = require('discord.js');
 
-const client = new VixitClient('e8f8df26918d21de113a00251250ebc6e71404d1bf520fdff24e9cae047b2c68');
+const vixit = new VixitClient('18b863f0e214bcd79baca9e65eb842c536f2f3cd3283ad3570fdb977f6071eb1');
+const client = new Discord.Client();
 
-client.on('commandReceived', (command) => {
-     console.log(command);
+vixit.on('commandReceived', (command) => {
+
+     let channel = client.channels.get(command.channel);
+     let user = client.users.get(command.user);
+
+     if (command.command == 'hackweek') {
+          channel.send(`<@${user.id}>, I can't give you a ${command.arguments[0]} Hack Week shirt. Take this awesome unreal ${command.arguments[0]} heart instead -> :${command.arguments[0]}_heart: ^^`);
+     }
+
 });
 
-client.login();
+client.on('ready', () => {
+     client.user.setActivity('XgT4uJU', { type: 'WATCHING' });
+});
+
+client.login('NTk0MjkwMjE1NjgyODM0NDM3.XRaR9g.1stwbcy5rUwQA-YUZwhfCR_WgWM')
+vixit.login();

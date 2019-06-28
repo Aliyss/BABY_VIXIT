@@ -28,7 +28,7 @@ class VixitClient extends EventEmitter {
         });
 
         this.socket.on('command', (data) => {
-
+            console.log(data);
             this.emit('commandReceived', {
                 command: data.command,
                 arguments: data.arguments,
