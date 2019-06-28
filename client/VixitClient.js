@@ -1,4 +1,4 @@
-const EventEmitter = require('events'); // native
+const EventEmitter = require('events');
 const io = require('socket.io-client');
 
 class VixitClient extends EventEmitter {
@@ -16,10 +16,12 @@ class VixitClient extends EventEmitter {
             query: {
                 token: this.token
             },
-            reconnect: true // mind launching 2nd terminal ?
+            reconnect: true
         });
 
-        this.socket.on('connect', ())
+        this.socket.on('connect', () => {
+            console.log('Connected!');
+        });
 
         this.socket.on('connect_error', (err) => {
             console.error(err);
@@ -27,13 +29,13 @@ class VixitClient extends EventEmitter {
 
         this.socket.on('command', (data) => {
 
-            let cmd = data.command.split('_')[1];
-
             this.emit('commandReceived', {
-                command: cmd,
+                command: data.command,
                 arguments: data.arguments,
-                enhancedArguments: data.enhanced
-
+                enhancedArguments: data.enhanced,
+                guild: data.guild,
+                channel: data.channel,
+                user: data.user
             });
 
         });
